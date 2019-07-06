@@ -131,7 +131,11 @@ class HomePage extends React.Component {
   componentDidMount() {
     console.log(":",headers,"filter :"+this.state.filter );
   
-    axios.get(`https://grievance-portal-server-1.herokuapp.com/api/official/allocatedGrievances`, {headers: headers})
+    axios.get(`https://grievance-portal-server-1.herokuapp.com/api/official/allocatedGrievances`, { headers: {
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + !!this.props.User.token ? this.props.User.token : localStorage.getItem('token')
+      }
+    })
       .then((response) => {
         console.log(response)
         if(response.status === 200){
